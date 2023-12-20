@@ -16,24 +16,11 @@ class _QuizState extends State<Quiz> {
       activeScreen = 'questions-screen';
     });
   }
-  // Widget? activeScreen;
 
-  // @override
-  // void initState() {
-  //   activeScreen = StartScreen(switchScreen);
-  //   super.initState();
-  // }
-  // void switchScreen() {
-  //   setState(() {
-  //     activeScreen = const QuistionsScreen();
-  //   });
-  // }
 
   @override
   Widget build(context) {
-    // final screenWidget = activeScreen == 'start-screen'
-        // ? StartScreen(switchScreen)
-        // : const QuistionsScreen();
+
         Widget screenWidget = StartScreen(switchScreen);
         if(activeScreen == 'questions-screen'){
           screenWidget = const QuistionsScreen();
