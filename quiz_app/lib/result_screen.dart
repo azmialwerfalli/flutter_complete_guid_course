@@ -1,10 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_app/components/questions_summary.dart';
+import 'package:quiz_app/data/questions.dart';
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({super.key});
+  const ResultScreen({
+    super.key,
+    required this.chosenAnswer,
+  });
+  final List<String> chosenAnswer;
+
+  List<Map<String, Object>> getSummaryData() {
+    final List<Map<String, Object>> summary = [];
+
+    for (var i = 0; i < chosenAnswer.length; i++) {
+      summary.add(
+        {
+          "question_index": i,
+          "question": questions[i].text,
+          "answer": questions[i].answers[0],
+          "user_answer": chosenAnswer[i],
+        },
+      );
+      // if('user_answer' == 'answer'){
+      //   summary[i]['isCorrect'] = isCorrect == chosenAnswer[i];
+      // }
+    }
+
+    return summary;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final summaryData = getSummaryData();
+    final totalQuestions = questions.length;
+    final isCorrect = summaryData.where((element) {
+      return element['user_answer'] == element['answer'];
+    }).length;
+
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -13,17 +45,23 @@ class ResultScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text("You answerd x of y questions Correctly!"),
+            Text(
+              "You answerd $isCorrect of $totalQuestions questions Correctly!",
+              style: const TextStyle(color: Colors.white),
+            ),
             const SizedBox(
               height: 30,
             ),
-            const Text("List of answers and questions...!"),
+            QuestionSummary(summaryData: summaryData),
             const SizedBox(
               height: 30,
             ),
             TextButton(
               onPressed: () {},
-              child: const Text('Reset Quiz'),
+              child: const Text(
+                'Reset Quiz',
+                style: TextStyle(color: Colors.white),
+              ),
             )
           ],
         ),
