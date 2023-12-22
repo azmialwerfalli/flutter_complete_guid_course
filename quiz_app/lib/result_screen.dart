@@ -6,10 +6,13 @@ class ResultScreen extends StatelessWidget {
   const ResultScreen({
     super.key,
     required this.chosenAnswer,
+    required this.onRestart
   });
   final List<String> chosenAnswer;
+  final void Function() onRestart;
 
-  List<Map<String, Object>> getSummaryData() {
+
+  List<Map<String, Object>> get summaryData {
     final List<Map<String, Object>> summary = [];
 
     for (var i = 0; i < chosenAnswer.length; i++) {
@@ -31,11 +34,13 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final summaryData = getSummaryData();
+    // final summaryData = getSummaryData();
     final totalQuestions = questions.length;
-    final isCorrect = summaryData.where((element) {
-      return element['user_answer'] == element['answer'];
-    }).length;
+    final isCorrect = summaryData
+        .where(
+          (element) => element['user_answer'] == element['answer'],
+        )
+        .length;
 
     return SizedBox(
       width: double.infinity,
@@ -57,7 +62,7 @@ class ResultScreen extends StatelessWidget {
               height: 30,
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: onRestart,
               child: const Text(
                 'Reset Quiz',
                 style: TextStyle(color: Colors.white),
