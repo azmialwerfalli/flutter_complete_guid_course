@@ -7,18 +7,38 @@ const uuid = Uuid();
 final forrmatter = DateFormat.yMd();
 
 enum Category {
-  food,
+  investment,
+  saving,
+  fitness,
+  internet,
   travel,
-  leisure,
+  car,
+  clothes,
+  service,
   work,
-  // learning,
+  leisure,
+  food,
+
+  // restaurants,
+  
   // entertainment,
 }
 const categoruIcons = {
-  Category.food: Icons.lunch_dining_rounded,
+  Category.food: Icons.shopping_cart_rounded,
+  // Category.restaurants: Icons.lunch_dining_rounded,
+  
+  Category.clothes: Icons.checkroom,
+  // Category.car: Icons.checkroom,
+  Category.fitness: Icons.fitness_center,
+  Category.car: Icons.drive_eta,
+  Category.service: Icons.handyman,
+  Category.internet: Icons.wifi,
   Category.travel: Icons.flight_takeoff_rounded,
+
   Category.leisure: Icons.movie_filter_rounded,
   Category.work: Icons.work_rounded,
+  Category.investment: Icons.show_chart,
+  Category.saving: Icons.monetization_on_rounded,
 
 };
 
