@@ -35,13 +35,18 @@ class _ExpensesState extends State<Expenses> {
   void _openAddExpeneseOverlay() {
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => const SingleChildScrollView(
-        child: NewExpense(),
+      builder: (ctx) =>  SingleChildScrollView(
+        child: NewExpense(onAddExpenese: _addExpenese),
         // child: Text('modal Sheeti'),
       ),
     );
   }
-
+  void _addExpenese(Expense expense){
+    setState(() {
+      // _registeredExpenses.add(NewExpense().getExpense);
+      _registeredExpenses.add(expense);
+      });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
