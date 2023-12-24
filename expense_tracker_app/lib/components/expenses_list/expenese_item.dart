@@ -22,7 +22,7 @@ class ExpenseItem extends StatelessWidget {
                   children: [
                     // Text(expense.category.name),
                     // shape
-                    Icon(categoruIcons[expense.category],size: 28),
+                    Icon(categoryIcons[expense.category],size: 28),
                     const SizedBox(
                       width: 20,
                     ),
@@ -31,8 +31,7 @@ class ExpenseItem extends StatelessWidget {
                       children: [
                         Text(
                           expense.title,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
+                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                         const SizedBox(height: 5),
                         Text(expense.formattedDate),

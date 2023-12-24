@@ -1,4 +1,5 @@
 import 'package:expense_tracker_app/Models/expense.dart';
+import 'package:expense_tracker_app/components/chart/chart.dart';
 import 'package:expense_tracker_app/components/expenses_list/expenses_list.dart';
 import 'package:expense_tracker_app/components/new_expanes.dart';
 import 'package:flutter/material.dart';
@@ -13,42 +14,57 @@ class Expenses extends StatefulWidget {
 class _ExpensesState extends State<Expenses> {
   final List<Expense> _registeredExpenses = [
     Expense(
-      title: "Flutter Course",
-      amount: 19.99,
-      date: DateTime.now(),
-      category: Category.work,
-    ),
-    Expense(
       title: "Burger",
       amount: 12.5,
       date: DateTime.now(),
       category: Category.food,
     ),
-    Expense(
-      title: "16GB Ram",
-      amount: 195.00,
-      date: DateTime.now(),
-      category: Category.work,
-    ),
   ];
 
   void _openAddExpeneseOverlay() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
-      builder: (ctx) =>  SingleChildScrollView(
-        child: NewExpense(onAddExpenese: _addExpenese),
-        // child: Text('modal Sheeti'),
+      builder: (ctx) => NewExpense(onAddExpenese: _addExpenese),
+    );
+  }
+
+  void _addExpenese(Expense expense) {
+    setState(() {
+      _registeredExpenses.add(expense);
+    });
+  }
+
+  void _removeExpenese(Expense expense) {
+    final expeneseIndex = _registeredExpenses.indexOf(expense);
+    setState(() {
+      _registeredExpenses.remove(expense);
+    });
+    ScaffoldMessenger.of(context).clearSnackBars(); 
+    ScaffoldMessenger.of(context).showSnackBar(
+       SnackBar(
+        duration: const Duration(seconds: 5),
+        content: const Text('Expenese Deleted'),
+        action: SnackBarAction(label: 'Undo', onPressed: (){
+          setState(() {
+            _registeredExpenses.insert(expeneseIndex, expense);
+          });
+        }),
       ),
     );
   }
-  void _addExpenese(Expense expense){
-    setState(() {
-      // _registeredExpenses.add(NewExpense().getExpense);
-      _registeredExpenses.add(expense);
-      });
-  }
+
   @override
   Widget build(BuildContext context) {
+    Widget mainContent = const Center(
+      child: Text('You didnt added any Expeneses Yet please Add some'),
+    );
+    if (_registeredExpenses.isNotEmpty) {
+      mainContent = ExpensesList(
+        expensesList: _registeredExpenses,
+        onRemoveExpenese: _removeExpenese,
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Azmi Expenese Tracker'),
@@ -61,12 +77,11 @@ class _ExpensesState extends State<Expenses> {
       ),
       body: Column(
         children: [
-          const Text("The Chart"),
-          Expanded(
-            child: ExpensesList(
-              expensesList: _registeredExpenses,
-            ),
-          ),
+          // Padding(
+            // padding: const EdgeInsets.symmetric(vertical: 5),
+             Chart(expenses: _registeredExpenses),
+          // ),
+          Expanded(child: mainContent),
         ],
       ),
     );

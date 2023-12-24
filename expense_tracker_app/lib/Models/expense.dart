@@ -20,13 +20,14 @@ enum Category {
   food,
 
   // restaurants,
-  
+
   // entertainment,
 }
-const categoruIcons = {
+
+const categoryIcons = {
   Category.food: Icons.shopping_cart_rounded,
   // Category.restaurants: Icons.lunch_dining_rounded,
-  
+
   Category.clothes: Icons.checkroom,
   // Category.car: Icons.checkroom,
   Category.fitness: Icons.fitness_center,
@@ -39,7 +40,6 @@ const categoruIcons = {
   Category.work: Icons.work_rounded,
   Category.investment: Icons.show_chart,
   Category.saving: Icons.monetization_on_rounded,
-
 };
 
 class Expense {
@@ -57,5 +57,33 @@ class Expense {
   final Category category;
 
   String get formattedDate => forrmatter.format(date);
-  
+}
+
+class ExpeneseBucket {
+  const ExpeneseBucket({
+    required this.category,
+    required this.expenses,
+  });
+
+  ExpeneseBucket.forCategory(List<Expense> allExpenses, this.category)
+      : expenses = allExpenses.where((element) => element.category == category).toList();
+
+  final Category category;
+  final List<Expense> expenses;
+
+  double get totalExpenses {
+    double sum = 0;
+    for (final element in expenses) {
+      sum += element.amount;
+    }
+    return sum;
+  }
+
+  // ExpeneseBucket({required this.name, required this.icon});
+  // factory ExpeneseBucket.fromJson(Map<String, dynamic> json) {
+  //   return ExpeneseBucket(
+  //     name: json['name'],
+  //     icon: IconData(json['icon'] as int, fontFamily: 'MaterialIcons')
+  //     );
+  //     }
 }

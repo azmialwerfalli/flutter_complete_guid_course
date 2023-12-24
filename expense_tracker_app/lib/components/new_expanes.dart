@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:expense_tracker_app/Models/expense.dart';
 
-// import 'package:intl/intl.dart';
-// import 'package:uuid/uuid.dart';
-
-// const uuid = Uuid();
-// final forrmatter = DateFormat.yMd();
-
 class NewExpense extends StatefulWidget {
   const NewExpense({super.key, required this.onAddExpenese});
   final void Function(Expense expense) onAddExpenese;
@@ -19,19 +13,14 @@ class NewExpense extends StatefulWidget {
 class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
-  // final _amountController = TextEditingController();
 
   Category _selectedCategory = Category.leisure;
-  // void _selectCategory(Category value) {
-  //   setState(() {
-  //     _selectedCategory = value;
-  //     });
+
   DateTime? _selectedDate;
 
   void _presentDatePicker() async {
     final now = DateTime.now();
     final firstDate = DateTime(now.year - 1, now.month, now.day);
-    // final lastDate = DateTime(year);
     final pickedDate = await showDatePicker(
       context: context,
       initialDate: now,
@@ -65,9 +54,7 @@ class _NewExpenseState extends State<NewExpense> {
       );
       return;
     }
-    // if(_amountController.text.isEmpty){
-    //   return;
-    // }
+
     widget.onAddExpenese(
       Expense(
           title: _titleController.text,
@@ -76,12 +63,6 @@ class _NewExpenseState extends State<NewExpense> {
           category: _selectedCategory),
     );
     Navigator.pop(context);
-    // Expense expense = Expense(
-    //   title: _titleController.text,
-    //   amount: amount,
-    //   category: _selectedCategory,
-    //   dateTime: _selectedDate!,
-    //   );
   }
 
   @override
@@ -91,16 +72,10 @@ class _NewExpenseState extends State<NewExpense> {
     super.dispose();
   }
 
-  // var _enteredTitle = '';
-
-  // void _saveTitleInput(String inputValue) {
-  //   _enteredTitle = inputValue;
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
       child: Column(
         children: [
           TextField(
@@ -161,11 +136,6 @@ class _NewExpenseState extends State<NewExpense> {
                       )
                       .toList(),
                   onChanged: (value) {
-                    // if (value == null){
-                    //   return;
-                    // }
-                    // value ?? return;
-                    // value == null ? return;
                     if (value == null) return;
 
                     setState(() {
