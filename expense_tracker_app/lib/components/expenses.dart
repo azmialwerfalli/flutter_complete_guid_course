@@ -40,23 +40,25 @@ class _ExpensesState extends State<Expenses> {
     setState(() {
       _registeredExpenses.remove(expense);
     });
-    ScaffoldMessenger.of(context).clearSnackBars(); 
+    ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
-       SnackBar(
+      SnackBar(
         duration: const Duration(seconds: 5),
         content: const Text('Expenese Deleted'),
-        action: SnackBarAction(label: 'Undo', onPressed: (){
-          setState(() {
-            _registeredExpenses.insert(expeneseIndex, expense);
-          });
-        }),
+        action: SnackBarAction(
+            label: 'Undo',
+            onPressed: () {
+              setState(() {
+                _registeredExpenses.insert(expeneseIndex, expense);
+              });
+            }),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
     MediaQuery.of(context).size.height;
     Widget mainContent = const Center(
       child: Text('You didnt added any Expeneses Yet please Add some'),
@@ -68,24 +70,33 @@ class _ExpensesState extends State<Expenses> {
       );
     }
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Azmi Expenese Tracker'),
-        actions: [
-          IconButton(
-            onPressed: _openAddExpeneseOverlay,
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          // Padding(
-            // padding: const EdgeInsets.symmetric(vertical: 5),
-             Chart(expenses: _registeredExpenses),
-          // ),
-          Expanded(child: mainContent),
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: const Text('Azmi Expenese Tracker'),
+          actions: [
+            IconButton(
+              onPressed: _openAddExpeneseOverlay,
+              icon: const Icon(Icons.add),
+            ),
+          ],
+        ),
+        body: width < 600
+            ? Column(
+                children: [
+                  // Padding(
+                  // padding: const EdgeInsets.symmetric(vertical: 5),
+                  Chart(expenses: _registeredExpenses),
+                  // ),
+                  Expanded(child: mainContent),
+                ],
+              )
+            : Row(
+                children: [
+                  // Padding(
+                  // padding: const EdgeInsets.symmetric(vertical: 5),
+                  Expanded(child: Chart(expenses: _registeredExpenses)),
+                  // ),
+                  Expanded(child: mainContent),
+                ],
+              ));
   }
 }
