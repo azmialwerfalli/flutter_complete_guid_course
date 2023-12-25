@@ -13,12 +13,12 @@ class Expenses extends StatefulWidget {
 
 class _ExpensesState extends State<Expenses> {
   final List<Expense> _registeredExpenses = [
-    Expense(
-      title: "Burger",
-      amount: 12.5,
-      date: DateTime.now(),
-      category: Category.food,
-    ),
+    // Expense(
+    //   title: "Burger",
+    //   amount: 12.5,
+    //   date: DateTime.now(),
+    //   category: Category.food,
+    // ),
   ];
 
   void _openAddExpeneseOverlay() {
@@ -56,6 +56,8 @@ class _ExpensesState extends State<Expenses> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQuery.of(context).size.width;
+    MediaQuery.of(context).size.height;
     Widget mainContent = const Center(
       child: Text('You didnt added any Expeneses Yet please Add some'),
     );
