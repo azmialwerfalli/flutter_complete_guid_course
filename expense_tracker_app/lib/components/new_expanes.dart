@@ -1,3 +1,4 @@
+// import 'package:expense_tracker_app/widgets/new_expenses/new_expenses_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:expense_tracker_app/Models/expense.dart';
 
@@ -12,6 +13,7 @@ class NewExpense extends StatefulWidget {
 
 class _NewExpenseState extends State<NewExpense> {
   final _titleController = TextEditingController();
+  // final _titleController = TextEditingController();
   final _amountController = TextEditingController();
 
   Category _selectedCategory = Category.leisure;
@@ -78,7 +80,7 @@ class _NewExpenseState extends State<NewExpense> {
     return LayoutBuilder(builder: (ctx, constraints) {
       // print(constraints.minWidth)
       // print(constraints.maxHeight)
-      // final width 
+      final width = constraints.maxWidth;
       return SizedBox(
         height: double.infinity,
         child: SingleChildScrollView(
@@ -86,48 +88,127 @@ class _NewExpenseState extends State<NewExpense> {
             padding: EdgeInsets.fromLTRB(16, 16, 16, keyboardSpace + 16),
             child: Column(
               children: [
-                TextField(
-                  controller: _titleController,
-                  maxLength: 50,
-                  decoration: const InputDecoration(
-                    labelText: "Title",
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _amountController,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          prefixText: '\$ ',
-                          labelText: "Amount",
+                if (width >= 600)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _titleController,
+                          maxLength: 50,
+                          decoration: const InputDecoration(
+                            labelText: "Title",
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            _selectedDate == null
-                                ? 'No date selected'
-                                : forrmatter.format(_selectedDate!),
+                      const SizedBox(
+                        width: 24,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller: _amountController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            prefixText: '\$ ',
+                            labelText: "Amount",
                           ),
-                          IconButton(
-                              onPressed: _presentDatePicker,
-                              icon: const Icon(
-                                Icons.calendar_month_rounded,
-                              ))
+                        ),
+                      ),
+                    ],
+                  )
+                else
+                  TextField(
+                    controller: _titleController,
+                    maxLength: 50,
+                    decoration: const InputDecoration(
+                      labelText: "Title",
+                    ),
+                  ),
+                if (width >= 600)
+                  Row(
+                    children: [
+                      Row(
+                        children: [
+                          DropdownButton(
+                              value: _selectedCategory,
+                              items: Category.values
+                                  .map(
+                                    (category) => DropdownMenuItem(
+                                      value: category,
+                                      child: Text(
+                                        category.name.toUpperCase(),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (value) {
+                                if (value == null) return;
+
+                                setState(() {
+                                  _selectedCategory = value;
+                                });
+                              }),
+                          const SizedBox(
+                            width: 24,
+                          ),
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  _selectedDate == null
+                                      ? 'No date selected'
+                                      : forrmatter.format(_selectedDate!),
+                                ),
+                                IconButton(
+                                    onPressed: _presentDatePicker,
+                                    icon: const Icon(
+                                      Icons.calendar_month_rounded,
+                                    ))
+                              ],
+                            ),
+                          )
                         ],
                       ),
-                    )
-                  ],
-                ),
+                    ],
+                  )
+                else
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: _amountController,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            prefixText: '\$ ',
+                            labelText: "Amount",
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              _selectedDate == null
+                                  ? 'No date selected'
+                                  : forrmatter.format(_selectedDate!),
+                            ),
+                            IconButton(
+                                onPressed: _presentDatePicker,
+                                icon: const Icon(
+                                  Icons.calendar_month_rounded,
+                                ))
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 const SizedBox(height: 20),
                 Row(
                   children: [
