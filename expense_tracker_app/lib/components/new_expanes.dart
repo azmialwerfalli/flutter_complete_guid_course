@@ -127,50 +127,44 @@ class _NewExpenseState extends State<NewExpense> {
                 if (width >= 600)
                   Row(
                     children: [
-                      Row(
-                        children: [
-                          DropdownButton(
-                              value: _selectedCategory,
-                              items: Category.values
-                                  .map(
-                                    (category) => DropdownMenuItem(
-                                      value: category,
-                                      child: Text(
-                                        category.name.toUpperCase(),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                              onChanged: (value) {
-                                if (value == null) return;
-
-                                setState(() {
-                                  _selectedCategory = value;
-                                });
-                              }),
-                          const SizedBox(
-                            width: 24,
-                          ),
-                          Expanded(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  _selectedDate == null
-                                      ? 'No date selected'
-                                      : forrmatter.format(_selectedDate!),
+                      DropdownButton(
+                          value: _selectedCategory,
+                          items: Category.values
+                              .map(
+                                (category) => DropdownMenuItem(
+                                  value: category,
+                                  child: Text(
+                                    category.name.toUpperCase(),
+                                  ),
                                 ),
-                                IconButton(
-                                    onPressed: _presentDatePicker,
-                                    icon: const Icon(
-                                      Icons.calendar_month_rounded,
-                                    ))
-                              ],
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            if (value == null) return;
+
+                            setState(() {
+                              _selectedCategory = value;
+                            });
+                          }),
+                      const SizedBox(width: 24),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              _selectedDate == null
+                                  ? 'No date selected'
+                                  : forrmatter.format(_selectedDate!),
                             ),
-                          )
-                        ],
-                      ),
+                            IconButton(
+                                onPressed: _presentDatePicker,
+                                icon: const Icon(
+                                  Icons.calendar_month_rounded,
+                                ))
+                          ],
+                        ),
+                      )
                     ],
                   )
                 else
@@ -210,38 +204,53 @@ class _NewExpenseState extends State<NewExpense> {
                     ],
                   ),
                 const SizedBox(height: 20),
-                Row(
-                  children: [
-                    DropdownButton(
-                        value: _selectedCategory,
-                        items: Category.values
-                            .map(
-                              (category) => DropdownMenuItem(
-                                value: category,
-                                child: Text(
-                                  category.name.toUpperCase(),
+                if (width >= 600)
+                  Row(
+                    children: [
+                      const Spacer(),
+                      ElevatedButton(
+                        onPressed: _submitData,
+                        child: const Text('Add Expense'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Cancel'),
+                      ),
+                    ],
+                  )
+                else
+                  Row(
+                    children: [
+                      DropdownButton(
+                          value: _selectedCategory,
+                          items: Category.values
+                              .map(
+                                (category) => DropdownMenuItem(
+                                  value: category,
+                                  child: Text(
+                                    category.name.toUpperCase(),
+                                  ),
                                 ),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: (value) {
-                          if (value == null) return;
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            if (value == null) return;
 
-                          setState(() {
-                            _selectedCategory = value;
-                          });
-                        }),
-                    const Spacer(),
-                    ElevatedButton(
-                      onPressed: _submitData,
-                      child: const Text('Add Expense'),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('Cancel'),
-                    ),
-                  ],
-                ),
+                            setState(() {
+                              _selectedCategory = value;
+                            });
+                          }),
+                      const Spacer(),
+                      ElevatedButton(
+                        onPressed: _submitData,
+                        child: const Text('Add Expense'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Cancel'),
+                      ),
+                    ],
+                  ),
               ],
             ),
           ),
