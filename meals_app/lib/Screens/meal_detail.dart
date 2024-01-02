@@ -6,21 +6,25 @@ class MealDetailsScreen extends StatelessWidget {
   const MealDetailsScreen({
     super.key,
     required this.meal,
-    // required this.title,
+    required this.onToggleFavorite,
   });
-  // final String title;
+
   final Meal meal;
+  final void Function(Meal meal) onToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
-    // Widget _ingredients = ListView.builder(
-    //   itemCount: meal.ingredients.length, //Only one tab for details page
-    //   itemBuilder: (context, index) => MealIngredients(),
-    // );
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
-        actions: [IconButton(onPressed: (){}, icon: const Icon(Icons.star_border))],
+        actions: [
+          IconButton(
+            onPressed: () {
+              onToggleFavorite(meal);
+            },
+            icon: const Icon(Icons.star_border),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -43,10 +47,8 @@ class MealDetailsScreen extends StatelessWidget {
             for (final ingredient in meal.ingredients)
               Text(
                 ingredient,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Theme.of(context).colorScheme.onBackground),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground),
               ),
             const SizedBox(height: 24),
             Text(
@@ -58,14 +60,13 @@ class MealDetailsScreen extends StatelessWidget {
             const SizedBox(height: 14),
             for (final steps in meal.steps)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 child: Text(
                   steps,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(color: Theme.of(context).colorScheme.onBackground),
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: Theme.of(context).colorScheme.onBackground),
                 ),
               ),
           ],
