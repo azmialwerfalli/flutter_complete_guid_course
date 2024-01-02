@@ -21,7 +21,7 @@ class CategoriesScreen extends StatelessWidget {
         builder: (ctx) => MealsScreen(
               title: category.title,
               meals: filterdMeals,
-              onToggleFavorite: (meal) => {},
+              onToggleFavorite: onToggleFavorite,
             )));
     // Navigator.push(context, route)
   }
