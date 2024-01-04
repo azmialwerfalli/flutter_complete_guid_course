@@ -1,37 +1,43 @@
 import 'package:flutter/material.dart';
 
 class FilterItem extends StatefulWidget {
-  FilterItem({super.key,required this.filterValue});
-  bool filterValue = false;
+  const FilterItem({super.key,required this.titles,required this.subtitles,required this.filterValue});
+
+final String titles;
+final String subtitles;
+  // final String titles;
+  // final String subtitles;
+final bool filterValue;
   
   @override
   State<FilterItem> createState() => _FilterItemState();
 }
 
 class _FilterItemState extends State<FilterItem> {
-  // get filterValue => null;
 
-    bool filterValue =false;             
-  //  filterValue = false;
+  // const filterValues = widget.filterValue.value;
   @override
   Widget build(BuildContext context) {
-    return SwitchListTile(value: filterValue,
-            onChanged: (isChecked) =>
-                setState(() => filterValue = isChecked),
-            title: Text(
-              'Gluten-free',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
+    return SwitchListTile(
+      value: filterValue,
+      onChanged: (isChecked) => setState(() => filterValue = isChecked),
+      title: Text(
+        widget.titles,
+        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onBackground,
             ),
-            subtitle: Text(
-              'Only include Gluten-free Meals.',
-              style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
-                  ),
+      ),
+      subtitle: Text(
+        widget.subtitles,
+        style: Theme.of(context).textTheme.labelMedium!.copyWith(
+              color: Theme.of(context).colorScheme.onBackground,
             ),
-            activeColor: Theme.of(context).colorScheme.tertiary,
-            contentPadding: const EdgeInsets.only(left: 34, right: 22),
-          );
+      ),
+      activeColor: Theme.of(context).colorScheme.tertiary,
+      contentPadding: const EdgeInsets.only(left: 34, right: 22),
+    );
   }
+}
+set theme(bool filterValue) {
+  filterValue = filterValue;
 }
