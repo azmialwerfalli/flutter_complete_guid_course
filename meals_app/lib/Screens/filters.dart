@@ -15,12 +15,15 @@ class FiltersScreen extends StatefulWidget {
 
 class _FiltersScreenState extends State<FiltersScreen> {
   var _glutenFreeFilterSet = false;
+  var _lactoseFreeFilterSet = false;
+  var _vegetarianFilterSet = false;
+  var _veganFilterSet = false;
 
   void _setScreen(String identifier) {
     Navigator.of(context).pop();
     if (identifier == 'meals') {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (ctx) => const TabsScreen()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (ctx) => const TabsScreen()));
     }
   }
 
@@ -40,12 +43,44 @@ class _FiltersScreenState extends State<FiltersScreen> {
           // FilterItem(widget.)
           SwitchListTile(
             value: _glutenFreeFilterSet,
-            onChanged: (isChecked) => setState(() => _glutenFreeFilterSet = isChecked),
+            onChanged: (isChecked) =>
+                setState(() => _glutenFreeFilterSet = isChecked),
             title: const FilterTitles(titles: 'Gluten-free'),
-            subtitle: const FilterSubtitle(subtitles: 'Only include Gluten-free Meals.'),
+            subtitle: const FilterSubtitle(
+                subtitles: 'Only include Gluten-free Meals.'),
             activeColor: activeColors,
             contentPadding: contentPaddings,
-          )
+          ),
+          SwitchListTile(
+            value: _lactoseFreeFilterSet,
+            onChanged: (isChecked) =>
+                setState(() => _lactoseFreeFilterSet = isChecked),
+            title: const FilterTitles(titles: 'Lactose-free'),
+            subtitle: const FilterSubtitle(
+                subtitles: 'Only include Lactose-free Meals.'),
+            activeColor: activeColors,
+            contentPadding: contentPaddings,
+          ),
+          SwitchListTile(
+            value: _vegetarianFilterSet,
+            onChanged: (isChecked) =>
+                setState(() => _vegetarianFilterSet = isChecked),
+            title: const FilterTitles(titles: 'Vegetarian Food'),
+            subtitle: const FilterSubtitle(
+                subtitles: 'Only include Vegetarian Meals.'),
+            activeColor: activeColors,
+            contentPadding: contentPaddings,
+          ),
+          SwitchListTile(
+            value: _veganFilterSet,
+            onChanged: (isChecked) =>
+                setState(() => _veganFilterSet = isChecked),
+            title: const FilterTitles(titles: 'Vegan Food'),
+            subtitle:
+                const FilterSubtitle(subtitles: 'Only include Vegan Meals.'),
+            activeColor: activeColors,
+            contentPadding: contentPaddings,
+          ),
         ],
       ),
     );
