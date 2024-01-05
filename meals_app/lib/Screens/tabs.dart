@@ -17,9 +17,10 @@ class _TabsScreenState extends State<TabsScreen> {
   int _selectedPageIndex = 0;
   final List<Meal> _favoriteMeals = [];
 
-  void _showInfoMessage(String message){
+  void _showInfoMessage(String message) {
     ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   void _toggleMealFavoriteStatus(Meal meal) {
@@ -27,13 +28,13 @@ class _TabsScreenState extends State<TabsScreen> {
 
     if (isExisting) {
       setState(() {
-      _favoriteMeals.remove(meal);
-      _showInfoMessage('Removed From Favorite');
+        _favoriteMeals.remove(meal);
+        _showInfoMessage('Removed From Favorite');
       });
     } else {
       setState(() {
-      _favoriteMeals.add(meal);
-      _showInfoMessage('added to Favorite');
+        _favoriteMeals.add(meal);
+        _showInfoMessage('added to Favorite');
       });
     }
   }
@@ -42,14 +43,20 @@ class _TabsScreenState extends State<TabsScreen> {
     setState(() => _selectedPageIndex = index);
   }
 
-  void _setScreen(String identifier) {
-      // Navigator.popUntil(context, ModalRoute.withName('/'));
-      Navigator.of(context).pop();
+  void _setScreen(String identifier) async {
+    // Navigator.popUntil(context, ModalRoute.withName('/'));
+    Navigator.of(context).pop();
     if (identifier == 'Filters') {
-      Navigator.of(context).push(MaterialPageRoute(builder: ((ctx) => const FiltersScreen() )));
+      final result = await Navigator.of(context).push<Map<Filter, bool>>(
+        MaterialPageRoute(builder: ((ctx) => const FiltersScreen())),
+      );
+      // print(result);
+      // if (result != null) {
+      //   setState(() {
+      //     _filters = result as Filter;
+      //     });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +76,9 @@ class _TabsScreenState extends State<TabsScreen> {
       appBar: AppBar(
         title: Text(activePageTitle),
       ),
-      drawer: MainDrawer(onSelectScreen: _setScreen,),
+      drawer: MainDrawer(
+        onSelectScreen: _setScreen,
+      ),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
