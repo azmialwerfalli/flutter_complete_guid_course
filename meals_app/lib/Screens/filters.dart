@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/Screens/tabs.dart';
-import 'package:meals_app/widgets/filter_item.dart';
+import 'package:meals_app/widgets/filterW/filterSubtitleTxt.dart';
+import 'package:meals_app/widgets/filterW/filtersTitleTxt.dart';
+// import 'package:meals_app/widgets/filter_item.dart';
 
 // import '../widgets/main_drawer.dart';
 
@@ -24,6 +26,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final activeColors = Theme.of(context).colorScheme.tertiary;
+    final contentPaddings = EdgeInsets.only(left: 34, right: 22);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Filters'),
@@ -33,26 +37,15 @@ class _FiltersScreenState extends State<FiltersScreen> {
       // ),
       body: Column(
         children: [
-          FilterItem(widget.)
-          // SwitchListTile(
-          //   value: _glutenFreeFilterSet,
-          //   onChanged: (isChecked) =>
-          //       setState(() => _glutenFreeFilterSet = isChecked),
-          //   title: Text(
-          //     'Gluten-free',
-          //     style: Theme.of(context).textTheme.titleLarge!.copyWith(
-          //           color: Theme.of(context).colorScheme.onBackground,
-          //         ),
-          //   ),
-          //   subtitle: Text(
-          //     'Only include Gluten-free Meals.',
-          //     style: Theme.of(context).textTheme.labelMedium!.copyWith(
-          //           color: Theme.of(context).colorScheme.onBackground,
-          //         ),
-          //   ),
-          //   activeColor: Theme.of(context).colorScheme.tertiary,
-          //   contentPadding: const EdgeInsets.only(left: 34, right: 22),
-          // )
+          // FilterItem(widget.)
+          SwitchListTile(
+            value: _glutenFreeFilterSet,
+            onChanged: (isChecked) => setState(() => _glutenFreeFilterSet = isChecked),
+            title: const FilterTitles(titles: 'Gluten-free'),
+            subtitle: const FilterSubtitle(subtitles: 'Only include Gluten-free Meals.'),
+            activeColor: activeColors,
+            contentPadding: contentPaddings,
+          )
         ],
       ),
     );
